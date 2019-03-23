@@ -1,0 +1,9 @@
+*.html
+.*
+*.pug
+LICENSE
+*.ico
+*.png
+*.svg
+
+node_modules
