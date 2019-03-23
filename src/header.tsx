@@ -4,7 +4,7 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <div className="is-size-1">Frudge Report</div>
+        <div className="is-size-2">The Frudge Report</div>
       </div>
     );
   }

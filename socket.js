@@ -8,10 +8,14 @@ io.on('connection', function(socket) {
   });
 
   setInterval(() => {
-    socket.emit('event', 'this works');
+    socket.emit('event', getRandomInt(90));
   }, 3000);
 });
 
 const port = 3001;
 io.listen(port);
 console.log('Listening on port ' + port + '...');
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
