@@ -14,14 +14,11 @@ class MessageTimer extends Component<
     return (
       <div className="monospace-numbers tag">
         <div>
-          Last transmission received at: {this.formatDate(this.props.lastReset)}
+          Last transmission received:
+          <strong>{this.props.lastReset.toLocaleTimeString()}</strong>
         </div>
       </div>
     );
-  }
-
-  formatDate(date: Date) {
-    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
   }
 }
 
