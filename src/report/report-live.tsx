@@ -79,7 +79,7 @@ class ReportLive extends Component<
       readings: [
         ...this.state.readings,
         { reading: data.reading, time: new Date(data.time) }
-      ]
+      ].slice(0, 25)
     });
   }
 
