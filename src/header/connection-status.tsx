@@ -8,7 +8,7 @@ class ConnectionStatus extends Component<{ isConnected?: boolean }> {
 
   render() {
     const { isConnected } = this.props;
-    let bannerClass = 'notification status-bar';
+    let bannerClass = 'tag status-bar';
     bannerClass += isConnected ? ' is-success' : ' is-danger';
 
     return (
