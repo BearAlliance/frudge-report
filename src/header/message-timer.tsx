@@ -14,24 +14,14 @@ class MessageTimer extends Component<
     return (
       <div className="monospace-numbers tag">
         <div>
-          Last transmission received: {this.state.sinceLastMessage}s ago
+          Last transmission received at: {this.formatDate(this.props.lastReset)}
         </div>
       </div>
     );
   }
 
-  componentDidMount(): void {
-    setInterval(
-      () =>
-        // TODO: this smells like a race condition
-        this.setState({
-          sinceLastMessage:
-            this.props.lastReset.getTime() >= Date.now() - 100
-              ? 0
-              : this.state.sinceLastMessage + 1
-        }),
-      1000
-    );
+  formatDate(date: Date) {
+    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
   }
 }
 
