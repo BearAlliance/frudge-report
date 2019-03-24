@@ -18,8 +18,7 @@ class Header extends Component<{}, { activeNav: string }> {
           <nav
             className="navbar is-info"
             role="navigation"
-            aria-label="main navigation"
-          >
+            aria-label="main navigation">
             <div className="navbar-brand">
               <div className="is-size-3 navbar-item">The Frudge Report</div>
             </div>
@@ -27,15 +26,13 @@ class Header extends Component<{}, { activeNav: string }> {
               <Link
                 className={'navbar-item' + this.isActive('live')}
                 to={'/live'}
-                onClick={e => this.setActive(e, 'live')}
-              >
+                onClick={e => this.setActive(e, 'live')}>
                 Live
               </Link>
               <Link
                 className={'navbar-item' + this.isActive('historical')}
                 to={'/historical'}
-                onClick={e => this.setActive(e, 'historical')}
-              >
+                onClick={e => this.setActive(e, 'historical')}>
                 Historical
               </Link>
             </div>
