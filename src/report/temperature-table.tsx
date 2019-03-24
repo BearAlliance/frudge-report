@@ -12,7 +12,7 @@ class TemperatureTable extends Component<{ readings: TempReading[] }> {
         <thead>
           <tr>
             <th>Temperature</th>
-            <th>Time Received</th>
+            <th>Time Recorded</th>
           </tr>
         </thead>
         <tbody>

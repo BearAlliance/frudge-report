@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Header from './header';
+import Header from './header/header';
 import Footer from './footer';
 import Report from './report/report';
 
@@ -13,17 +13,13 @@ class App extends Component<{}, { isConnected: boolean }> {
   render() {
     return (
       <div className="App">
-        <Header isConnected={this.state.isConnected} />
+        <Header />
 
-        <Report onConnectionChange={this.handleConnectionChange.bind(this)} />
+        <Report />
 
         <Footer />
       </div>
     );
-  }
-
-  handleConnectionChange() {
-    this.setState({ isConnected: true });
   }
 }
 

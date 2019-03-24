@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 const openSocket = require('socket.io-client');
 import TemperatureChart from './temperature-chart';
 import TemperatureTable from './temperature-table';
+import { connect } from 'react-redux';
+import { resetLastReceivedTimer, setConnectionState } from '../redux/actions';
 
 export interface TempReading {
   reading: number;
@@ -10,9 +12,8 @@ export interface TempReading {
 }
 
 class Report extends Component<
-  { onConnectionChange: any },
+  { resetLastReceivedTimer: any; setConnectionState: any },
   {
-    isConnected: any;
     lastMsg: Date;
     sinceLastMessage: number;
     readings: TempReading[];
@@ -21,7 +22,6 @@ class Report extends Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      isConnected: null,
       lastMsg: new Date(),
       sinceLastMessage: 0,
       readings: []
@@ -47,12 +47,6 @@ class Report extends Component<
 
   componentDidMount(): void {
     this.openConnection();
-
-    setInterval(
-      () =>
-        this.setState({ sinceLastMessage: this.state.sinceLastMessage + 1 }),
-      1000
-    );
   }
 
   openConnection() {
@@ -60,10 +54,10 @@ class Report extends Component<
     this.setState({ lastMsg: new Date() });
 
     socket.on('connect', () => {
-      this.handleConnectionChange(true);
+      this.props.setConnectionState(true);
     });
     socket.on('event', (data: any) => {
-      this.setState({ sinceLastMessage: 0 });
+      this.props.resetLastReceivedTimer();
       this.setState({
         readings: [
           ...this.state.readings,
@@ -75,13 +69,8 @@ class Report extends Component<
       this.handleBulkLoad(data.readings);
     });
     socket.on('disconnect', () => {
-      this.handleConnectionChange(false);
+      this.props.setConnectionState(false);
     });
-  }
-
-  handleConnectionChange(isConnected: boolean) {
-    this.props.onConnectionChange(isConnected);
-    this.setState({ isConnected: isConnected });
   }
 
   handleBulkLoad(readings: TempReading[]) {
@@ -98,4 +87,7 @@ class Report extends Component<
   }
 }
 
-export default Report;
+export default connect(
+  null,
+  { setConnectionState, resetLastReceivedTimer }
+)(Report);
