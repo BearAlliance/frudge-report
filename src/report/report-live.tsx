@@ -11,7 +11,7 @@ export interface TempReading {
   time: Date;
 }
 
-class Report extends Component<
+class ReportLive extends Component<
   { resetLastReceivedTimer: any; setConnectionState: any },
   {
     lastMsg: Date;
@@ -63,20 +63,23 @@ class Report extends Component<
       this.props.setConnectionState(true);
     });
     this.socket.on('event', (data: any) => {
-      console.log('event');
       this.props.resetLastReceivedTimer();
-      this.setState({
-        readings: [
-          ...this.state.readings,
-          { reading: data.reading, time: new Date(data.time) }
-        ]
-      });
+      this.handleNewReading(data);
     });
     this.socket.on('bulk-load', (data: any) => {
       this.handleBulkLoad(data.readings);
     });
     this.socket.on('disconnect', () => {
       this.props.setConnectionState(false);
+    });
+  }
+
+  handleNewReading(data: any) {
+    this.setState({
+      readings: [
+        ...this.state.readings,
+        { reading: data.reading, time: new Date(data.time) }
+      ]
     });
   }
 
@@ -97,4 +100,4 @@ class Report extends Component<
 export default connect(
   null,
   { setConnectionState, resetLastReceivedTimer }
-)(Report);
+)(ReportLive);
