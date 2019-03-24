@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import ConnectionStatus from './connection-status';
 import MessageTimer from './message-timer';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import ReportLive from '../report/report-live';
-import ReportHistorical from '../report/report-historical';
+import asyncComponent from '../async-component';
+
+const AsyncHistorical = asyncComponent(() =>
+  import('../report/report-historical')
+);
+const AsyncLive = asyncComponent(() => import('../report/report-live'));
 
 class Header extends Component<{}, { activeNav: string }> {
   constructor(props: any) {
@@ -47,9 +51,9 @@ class Header extends Component<{}, { activeNav: string }> {
           </nav>
         </div>
 
-        <Route exact path="/" component={ReportLive} />
-        <Route path="/live" component={ReportLive} />
-        <Route path="/historical" component={ReportHistorical} />
+        <Route exact path="/" component={AsyncLive} />
+        <Route path="/live" component={AsyncLive} />
+        <Route path="/historical" component={AsyncHistorical} />
       </Router>
     );
   }
