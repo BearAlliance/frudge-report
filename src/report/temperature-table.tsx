@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TempReading } from './report';
+import { TempReading } from './report-live';
 
 class TemperatureTable extends Component<{ readings: TempReading[] }> {
   constructor(props: any) {

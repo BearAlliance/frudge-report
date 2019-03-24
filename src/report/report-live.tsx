@@ -19,6 +19,8 @@ class Report extends Component<
     readings: TempReading[];
   }
 > {
+  socket: any;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -49,14 +51,19 @@ class Report extends Component<
     this.openConnection();
   }
 
+  componentWillUnmount(): void {
+    this.socket.disconnect();
+  }
+
   openConnection() {
-    let socket = openSocket('/');
+    this.socket = openSocket('/');
     this.setState({ lastMsg: new Date() });
 
-    socket.on('connect', () => {
+    this.socket.on('connect', () => {
       this.props.setConnectionState(true);
     });
-    socket.on('event', (data: any) => {
+    this.socket.on('event', (data: any) => {
+      console.log('event');
       this.props.resetLastReceivedTimer();
       this.setState({
         readings: [
@@ -65,10 +72,10 @@ class Report extends Component<
         ]
       });
     });
-    socket.on('bulk-load', (data: any) => {
+    this.socket.on('bulk-load', (data: any) => {
       this.handleBulkLoad(data.readings);
     });
-    socket.on('disconnect', () => {
+    this.socket.on('disconnect', () => {
       this.props.setConnectionState(false);
     });
   }

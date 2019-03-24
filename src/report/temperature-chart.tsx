@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TempReading } from './report';
+import { TempReading } from './report-live';
 import { Scatter } from 'react-chartjs-2';
 import { ChartData, ChartOptions } from 'chart.js';
 
