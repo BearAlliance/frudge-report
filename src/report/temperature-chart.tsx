@@ -44,13 +44,17 @@ class TemperatureChart extends Component<{ readings: TempReading[] }> {
 
           data: this.props.readings.map((reading, index) => {
             return {
-              x: index,
+              x: this.formatDate(reading.time),
               y: reading.reading
             };
           })
         }
       ]
     };
+  }
+
+  formatDate(date: Date) {
+    return `${date.getHours()}.${date.getMinutes()}`;
   }
 }
 
