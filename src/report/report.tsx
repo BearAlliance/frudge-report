@@ -60,8 +60,7 @@ class Report extends Component<
     this.setState({ lastMsg: new Date() });
 
     socket.on('connect', () => {
-      this.props.onConnectionChange(true);
-      this.setState({ isConnected: true });
+      this.handleConnectionChange(true);
     });
     socket.on('event', (data: any) => {
       this.setState({ sinceLastMessage: 0 });
@@ -73,15 +72,19 @@ class Report extends Component<
       });
     });
     socket.on('bulk-load', (data: any) => {
-      this.onBulkLoad(data.readings);
+      this.handleBulkLoad(data.readings);
     });
     socket.on('disconnect', () => {
-      this.props.onConnectionChange(false);
-      this.setState({ isConnected: false });
+      this.handleConnectionChange(false);
     });
   }
 
-  onBulkLoad(readings: TempReading[]) {
+  handleConnectionChange(isConnected: boolean) {
+    this.props.onConnectionChange(isConnected);
+    this.setState({ isConnected: isConnected });
+  }
+
+  handleBulkLoad(readings: TempReading[]) {
     this.setState({ sinceLastMessage: 0 });
     const bulkLoad = readings.map((reading: any) => {
       return {
